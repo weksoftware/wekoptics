@@ -23,7 +23,7 @@ while running:
     circle.render()
     rect.render()
 
-    #pygame.draw.polygon(screen, (170, 170, 255), circle.pygame_points())
+    pygame.draw.polygon(screen, (170, 170, 255), circle.pygame_points())
     pygame.draw.polygon(screen, (170, 170, 255), rect.pygame_points())
 
 

@@ -29,15 +29,14 @@ class CircleLens:
     def render(self):
         self.points = list()
         for i in range(360):
-            rotation = self.rotation + i
-            if rotation < 360:
-                x1 = self.x
-                y1 = self.y
-                x2 = math.ceil(self.x + self.radius * math.cos(rotation * math.pi/180))
-                y2 = math.ceil(self.y + self.radius * math.sin(rotation * math.pi/180))
-                x3 = self.x
-                y3 = self.radius + self.y
-                self.points.append({"x":x2, "y":y2})
+            rotation = self.rotation
+            x1 = self.x
+            y1 = self.y
+            x2 = math.ceil(self.x + self.radius * math.cos(rotation * math.pi/180))
+            y2 = math.ceil(self.y + self.radius * math.sin(rotation * math.pi/180))
+            x3 = self.x
+            y3 = self.radius + self.y
+            self.points.append({"x":x2, "y":y2})
 
             # angle = math.atan2(y3 - y1, x3 - x1) - math.atan2(y2 - y1, x2 - x1)
             # angle = angle * 180 / math.pi
