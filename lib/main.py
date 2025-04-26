@@ -3,6 +3,9 @@ import math
 def angles_summ(a, b):
     return (a - b) % 360
 
+def angles_diff(a, b):
+    return (a - b) % 360
+
 class Circle:
     def __init__(self, x, y, radius):
         self.x = x
@@ -19,27 +22,34 @@ class Circle:
             #map2d[y][x] = 1
 
 class CircleLens:
-    def __init__(self, x, y, radius, rotation):
+    def __init__(self, x, y, curvate, radius, rotation):
         self.x = x
         self.y = y
         self.radius = radius
+        self.curvate = curvate
         self.rotation = rotation
         self.points = list()
 
     def render(self):
         self.points = list()
-        for i in range(360):
-            rotation = self.rotation
-            x1 = self.x
-            y1 = self.y
-            x2 = math.ceil(self.x + self.radius * math.cos(rotation * math.pi/180))
-            y2 = math.ceil(self.y + self.radius * math.sin(rotation * math.pi/180))
-            x3 = self.x
-            y3 = self.radius + self.y
-            self.points.append({"x":x2, "y":y2})
+        for i in range(1, 180):
 
-            # angle = math.atan2(y3 - y1, x3 - x1) - math.atan2(y2 - y1, x2 - x1)
-            # angle = angle * 180 / math.pi
+            x_s = math.ceil(self.x + self.curvate * math.cos(angles_diff(i, 90) * math.pi/180)) #without rotation
+            y_s = math.ceil(self.y + self.curvate * math.sin(angles_diff(i, 90) * math.pi/180))
+
+            if y_s >= self.y - self.radius and y_s <= self.y + self.radius:
+                x1 = self.x
+                y1 = self.y
+
+                x3 = self.x
+                y3 = self.y - self.curvate
+
+                rotation = angles_summ(angles_diff(i, 90), self.rotation)
+
+                x2 = math.ceil(self.x + self.curvate * math.cos(rotation * math.pi/180))
+                y2 = math.ceil(self.y + self.curvate * math.sin(rotation * math.pi/180))
+
+                self.points.append({"x":x2, "y":y2})
             # if angle > 0 and angle < 180 + self.rotation:
             #     #map2d[x2][y2] = 1
             #     self.points.append({"x":x2, "y":y2})
